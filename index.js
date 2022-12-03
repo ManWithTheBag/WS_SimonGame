@@ -125,7 +125,7 @@ function compareArrays(){
 }
 
 function playSound(name){
-  var audio = new Audio("D:/WebDev_Learning/WS_SimonGame/Sound/" + name + ".mp3");
+  var audio = new Audio("/WS_SimonGame/Sound/" + name + ".mp3");
   audio.play();
 }
 
