@@ -1,8 +1,19 @@
 body{
-  background-color: #466C95;
+  background-color: #187498;
   text-align: center;
 }
 
+table{
+  margin: 0 auto;
+}
+
+button{
+  width: 13vw;
+  height: 13vw;
+  border-width:0.5vw;
+  border-radius: 10%;
+  margin: 1vw;
+}
 
 /* Title section */
 
@@ -16,41 +27,39 @@ body{
   font-size:  4.5vw;
 }
 
-._title-level{
+.js_title-level .js_title-result{
   font-size: 2.5vw;
   margin: 2vw 0 0 0;
 }
 
 
 /* Button section */
-table{
-  margin: 0 auto;
-}
-
-button{
-  width: 13vw;
-  height: 13vw;
-  border-width:0.5vw;
-  border-radius: 10%;
-  margin: 1vw;
-}
 
 ._button-section{
   margin: 0 auto;
 }
 
-.js_button-green{
+._button-animation_fadeIn{
+  opacity: 1;
+  transition: 0.5s;
+}
+._button-animation_fadeOut{
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#js_button-green{
   background-color: #A1DE93;
 }
 
-.js_button-red{
+#js_button-red{
   background-color: #F47C7C;
 }
 
-.js_button-yellow{
+#js_button-yellow{
   background-color: #F7F48B;
 }
 
-.js_button-blue{
+#js_button-blue{
   background-color: #70A1D7;
 }
