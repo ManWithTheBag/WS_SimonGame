@@ -15,6 +15,11 @@ button{
   margin: 1vw;
 }
 
+.js_body-game-over{
+  background-color: red;
+  opacity: 0.8;
+}
+
 /* Title section */
 
 ._title-section{
@@ -39,13 +44,9 @@ button{
   margin: 0 auto;
 }
 
-._button-animation_fadeIn{
-  opacity: 1;
-  transition: 0.5s;
-}
-._button-animation_fadeOut{
-  opacity: 0;
-  transition: 0.5s;
+.js_button-animation-pressed{
+  box-shadow: 0 0 15px white;
+  background-color: grey;
 }
 
 #js_button-green{

@@ -1,6 +1,8 @@
 var buttonsObjArray = [];
 var randomOrderArray = [];
 var inputOrderArray = [];
+var timeGameOverScreen = 500; // ms
+var timeAnimationClick = 300; // ms
 var timeDelayPlayButton = 1000; // ms
 var timeDelayChangeRound = 1500; // ms
 var isPlayingButton = false;
@@ -11,6 +13,7 @@ var redAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/red.mp3");
 var yellowAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/yellow.mp3");
 var blueAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/blue.mp3")
 var wrongAnswerAudio = new Audio("D:/WebDev_Learning/WS_SimonGame/Sound/wrong.mp3");
+var bodyHtml = $(document.getElementById("js-body"));
 
 function ButtonObj(number, color, audio) {
   this.number = number;
@@ -59,7 +62,9 @@ function getButtonHtml(color) {
 }
 
 function buttonAnimation(buttonHtml) {
-  buttonHtml.fadeOut(50).fadeIn(50);
+  buttonHtml.fadeOut(timeAnimationClick / 2).fadeIn(timeAnimationClick  / 2);
+  buttonHtml.addClass("js_button-animation-pressed");
+  setTimeout(function(){buttonHtml.removeClass("js_button-animation-pressed"), timeAnimationClick})
 }
 
 function playButtonAudio(audio){
@@ -151,6 +156,8 @@ function goodAnswer(){
   }
 }
 function wrongAnswer(){
+  bodyHtml.addClass("js_body-game-over");
+  setTimeout(function(){bodyHtml.removeClass("js_body-game-over")}, timeGameOverScreen)
   wrongAnswerAudio.play();
   inputOrderArray = [];
   randomOrderArray = [];
