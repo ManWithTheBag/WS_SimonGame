@@ -8,25 +8,17 @@ var timeDelayChangeRound = 1500; // ms
 var isPlayingButton = false;
 var isPlayingRound = false;
 var levelHtml = $(".js_title-level")[0];
-var greenAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/green.mp3");
-var redAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/red.mp3");
-var yellowAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/yellow.mp3");
-var blueAudio = new Audio("D:\WebDev_Learning/WS_SimonGame/Sound/blue.mp3")
-var wrongAnswerAudio = new Audio("D:/WebDev_Learning/WS_SimonGame/Sound/wrong.mp3");
 var bodyHtml = $(document.getElementById("js-body"));
 
 function ButtonObj(number, color, audio) {
   this.number = number;
   this.color = color;
-  this.audio = audio;
   this.buttonHtml = null;
   this.createClickEvent = function(buttonObj) {
     this.buttonHtml.on("click", function() {
       if(isPlayingButton === false && isPlayingRound === true){
-        onButtonClick(buttonObj);
-      }
-    })
-  }
+        onButtonClick(buttonObj);}
+    })}
 }
 
 
@@ -36,16 +28,16 @@ createButtons();
 addClickEvents();
 
 function createButtons() {
-  var buttonGreen = new ButtonObj(0, "green", greenAudio);
+  var buttonGreen = new ButtonObj(0, "green");
   buttonsObjArray.push(buttonGreen);
 
-  var buttonRed = new ButtonObj(1, "red", redAudio);
+  var buttonRed = new ButtonObj(1, "red");
   buttonsObjArray.push(buttonRed);
 
-  var buttonYellow = new ButtonObj(2, "yellow", yellowAudio);
+  var buttonYellow = new ButtonObj(2, "yellow");
   buttonsObjArray.push(buttonYellow);
 
-  var buttonBlue = new ButtonObj(3, "blue", blueAudio);
+  var buttonBlue = new ButtonObj(3, "blue");
   buttonsObjArray.push(buttonBlue);
 }
 
@@ -67,36 +59,22 @@ function buttonAnimation(buttonHtml) {
   setTimeout(function(){buttonHtml.removeClass("js_button-animation-pressed"), timeAnimationClick})
 }
 
-function playButtonAudio(audio){
-  audio.play();
-}
-
-
 // Game section
 
 function onButtonClick(buttonObj) {
   buttonAnimation(buttonObj.buttonHtml);
-  playButtonAudio(buttonObj.audio);
+  playSound(buttonObj.color);
 
   inputOrderArray.push(buttonObj);
 
-  if(compareArrays() === true){
-    goodAnswer();}
-  else{
-    wrongAnswer();}
+  compareArrays();
 }
 
 function updateLevelText(){
-  if(randomOrderArray.length === 0){
-    $(levelHtml).text("level " + 1)
-  }
-  else{
-    $(levelHtml).text("level " + randomOrderArray.length)
-  }
+  $(levelHtml).text("level " + randomOrderArray.length)
 }
 
 $(document).on("keypress", function(event) {
-  // debugger;
   if (event.key === "a" && isPlayingRound === false) {
     isPlayingRound = true;
     addToRandomOrderArray()
@@ -117,14 +95,13 @@ function getRandomNumber() {
 }
 
 function playRandomOrderAnimation(randomOrderArray) {
-
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   (async () => {
     for (let i = 0; i < randomOrderArray.length; i++) {
 
       buttonAnimation(randomOrderArray[i].buttonHtml);
-      playButtonAudio(randomOrderArray[i].audio);
+      playSound(randomOrderArray[i].color);
 
       await sleep(timeDelayPlayButton);
     }
@@ -135,19 +112,21 @@ function playRandomOrderAnimation(randomOrderArray) {
 }
 
 function compareArrays(){
-  for (var i = 0; i < inputOrderArray.length; i++) {
-    console.log( "Input:  " + inputOrderArray[i].number);
-    console.log( "Random:  " + randomOrderArray[i].number);
-  }
-   var result = true;
+  var result = true;
 
   for (var i = 0; i < inputOrderArray.length; i++) {
-
   if(inputOrderArray[i].number != randomOrderArray[i].number){
-    result = false;
-  }}
+    result = false;}}
 
-  return result;
+  if(result === true){
+    goodAnswer();}
+  else{
+    wrongAnswer();}
+}
+
+function playSound(name){
+  var audio = new Audio("D:/WebDev_Learning/WS_SimonGame/Sound/" + name + ".mp3");
+  audio.play();
 }
 
 function goodAnswer(){
@@ -158,9 +137,9 @@ function goodAnswer(){
 function wrongAnswer(){
   bodyHtml.addClass("js_body-game-over");
   setTimeout(function(){bodyHtml.removeClass("js_body-game-over")}, timeGameOverScreen)
-  wrongAnswerAudio.play();
+  playSound("wrong");
   inputOrderArray = [];
   randomOrderArray = [];
   isPlayingRound = false;
-    $(levelHtml).text("Press A for start");
+  $(levelHtml).text("Press A for start");
 }
